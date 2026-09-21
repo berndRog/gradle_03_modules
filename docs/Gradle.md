@@ -1,15 +1,17 @@
-# Gemeinsame Gradle-Konfiguration für Module
+# Shared Gradle Configuration for Modules
 
-## Stufe 3: Wiederholungen zentralisieren
+[Deutsche Version](Gradle_ger.md)
 
-Das Projekt `gradle_02_shared` zeigt zunächst bewusst zwei weitgehend vollständige Modul-Builddateien. Im Projekt `gradle_03_modules` werden die gemeinsamen Teile in das Root-`build.gradle.kts` verschoben. Dadurch wird sichtbar, welche Konfiguration projektweit gleich ist und welche Einstellungen von der Modulart abhängen.
+## Stage 3: Centralizing repeated configuration
 
-Die vorherigen Stufen bleiben separat lesbar:
+The `gradle_02_shared` project deliberately begins with two largely complete module build files. In `gradle_03_modules`, the common parts are moved to the root `build.gradle.kts`. This makes it clear which configuration is the same throughout the project and which settings depend on the module type.
 
-- [`gradle_01_wizard`: Gradle-Basisprojekt](https://github.com/berndRog/gradle_01_wizard/blob/master/docs/Gradle.md)
-- [`gradle_02_shared`: Android Library ergänzen](https://github.com/berndRog/gradle_02_shared/blob/master/docs/Gradle.md)
+The previous stages remain available separately:
 
-Das Projekt enthält weiterhin genau zwei Module:
+- [`gradle_01_wizard`: basic Gradle project](https://github.com/berndRog/gradle_01_wizard/blob/master/docs/Gradle.md)
+- [`gradle_02_shared`: adding an Android library](https://github.com/berndRog/gradle_02_shared/blob/master/docs/Gradle.md)
+
+The project still contains exactly two modules:
 
 ```text
 gradle_03_modules/
@@ -21,22 +23,22 @@ gradle_03_modules/
 └── settings.gradle.kts
 ```
 
-Der Name `gradle_03_modules` steht in diesem Beispiel für die **zentrale Konfiguration der Module**. Zusätzliche Vorlesungsmodule werden in diesem Repository-Stand noch nicht registriert.
+In this example, the name `gradle_03_modules` refers to the **centralized configuration of the modules**. No additional course modules are registered at this stage.
 
-## Minimale Modul-Builddateien
+## Minimal module build files
 
-Die Dateien `app/build.gradle.kts` und `Shared/build.gradle.kts` enthalten nur noch einen Hinweis:
+The files `app/build.gradle.kts` and `Shared/build.gradle.kts` now contain only a note:
 
 ```kotlin
 // Android configuration, plugins, and dependencies are managed centrally in
 // the build.gradle.kts file of the root project.
 ```
 
-Das ist möglich, weil das Root-Skript seine Konfiguration mit `subprojects { ... }` auf alle direkten und indirekten Subprojekte anwendet.
+This is possible because the root script applies its configuration to all direct and indirect subprojects using `subprojects { ... }`.
 
-## Plugins zentral anwenden
+## Applying plugins centrally
 
-Im Root-`build.gradle.kts` bleiben die Plugin-Versionen wie zuvor über den Version Catalog verfügbar. Innerhalb von `subprojects` wird zunächst die Modulart bestimmt:
+As before, the plugin versions remain available in the root `build.gradle.kts` through the version catalog. Inside `subprojects`, the module type is determined first:
 
 ```kotlin
 val isSharedLibrary = project.name.startsWith("Shared")
@@ -49,7 +51,7 @@ else {
 }
 ```
 
-`Shared` wird damit als Android Library behandelt; alle anderen vorhandenen Module werden als Android Applications behandelt. Anschließend werden die gemeinsam benötigten Plugins angewendet:
+This treats `Shared` as an Android library and all other existing modules as Android applications. The commonly required plugins are then applied:
 
 ```kotlin
 pluginManager.apply("org.jetbrains.kotlin.plugin.compose")
@@ -57,20 +59,20 @@ pluginManager.apply("org.jetbrains.kotlin.plugin.serialization")
 pluginManager.apply("com.google.devtools.ksp")
 ```
 
-Im `plugins`-Block sind die Plugin-Versionen weiterhin mit `apply false` deklariert. `pluginManager.apply(...)` wendet die bereits bekannten Plugins dann auf das jeweilige Subprojekt an.
+The plugin versions are still declared with `apply false` in the `plugins` block. `pluginManager.apply(...)` then applies these already known plugins to each subproject.
 
-Die Erkennung über den Namen `Shared` ist für dieses kleine Lehrbeispiel kompakt und gut sichtbar. In einem größeren Produktivprojekt wären eigene Convention Plugins robuster, weil die Modulart dann nicht von einer Namensregel abhängt.
+Detecting `Shared` by name is compact and easy to see in this small teaching example. In a larger production project, custom convention plugins would be more robust because the module type would not depend on a naming rule.
 
-## Unterschiedliche Android-Erweiterungen
+## Different Android extensions
 
-Das Android-Gradle-Plugin stellt je nach Modulart eine andere Erweiterung bereit. Deshalb importiert das Root-Skript:
+The Android Gradle Plugin provides a different extension for each module type. The root script therefore imports:
 
 ```kotlin
 import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.LibraryExtension
 ```
 
-Für `Shared` wird `LibraryExtension` konfiguriert:
+`LibraryExtension` is configured for `Shared`:
 
 ```kotlin
 extensions.configure<LibraryExtension> {
@@ -84,7 +86,7 @@ extensions.configure<LibraryExtension> {
 }
 ```
 
-Für `app` wird `ApplicationExtension` verwendet:
+`ApplicationExtension` is used for `app`:
 
 ```kotlin
 extensions.configure<ApplicationExtension> {
@@ -101,17 +103,17 @@ extensions.configure<ApplicationExtension> {
 }
 ```
 
-Gemeinsame Werte wie `compileSdk`, `minSdk`, Java-Version, Testoptionen und Compose-Unterstützung stehen zwar in beiden Zweigen, unterscheiden sich aber teilweise in ihrer Android-DSL. Application-spezifische Werte wie `applicationId` und `targetSdk` gehören nicht in die Library-Konfiguration.
+Common values such as `compileSdk`, `minSdk`, the Java version, test options, and Compose support appear in both branches, although their Android DSLs differ in some respects. Application-specific values such as `applicationId` and `targetSdk` do not belong in the library configuration.
 
-## Abhängigkeiten zentral deklarieren
+## Declaring dependencies centrally
 
-Innerhalb eines normalen Modulskripts kann beispielsweise geschrieben werden:
+Inside a regular module script, one can write, for example:
 
 ```kotlin
 implementation(libs.androidx.core.ktx)
 ```
 
-Das Root-Skript konfiguriert andere Projekte dynamisch. Deshalb verwendet es die allgemeinere Form:
+The root script configures other projects dynamically. It therefore uses the more general form:
 
 ```kotlin
 add("implementation", sharedLibs.androidx.core.ktx)
@@ -119,13 +121,13 @@ add("testImplementation", sharedLibs.junit)
 add("ksp", sharedLibs.androidx.room3.compiler)
 ```
 
-`sharedLibs` hält eine Referenz auf den Version Catalog des Root-Projekts:
+`sharedLibs` holds a reference to the root project's version catalog:
 
 ```kotlin
 val sharedLibs = libs
 ```
 
-Die lokale Projektabhängigkeit wird nur für Application-Module ergänzt:
+The local project dependency is added only to application modules:
 
 ```kotlin
 if (!isSharedLibrary) {
@@ -133,9 +135,9 @@ if (!isSharedLibrary) {
 }
 ```
 
-Damit gilt weiterhin die Abhängigkeitsrichtung `app` → `Shared`. `Shared` erhält keine Abhängigkeit auf sich selbst und keine Abhängigkeit auf ein Application-Modul.
+The dependency direction therefore remains `app` → `Shared`. `Shared` receives neither a dependency on itself nor a dependency on an application module.
 
-Auch die Compose-BOM muss für jede relevante Konfiguration registriert werden:
+The Compose BOM must also be registered for every relevant configuration:
 
 ```kotlin
 val composeBom = platform(sharedLibs.androidx.compose.bom)
@@ -144,31 +146,31 @@ add("testImplementation", composeBom)
 add("androidTestImplementation", composeBom)
 ```
 
-## Was ändert sich gegenüber `shared`?
+## What changes compared with `shared`?
 
-| Datei | Änderung |
+| File | Change |
 |---|---|
-| Root-`build.gradle.kts` | wendet Plugins an und konfiguriert Android sowie Dependencies für alle Subprojekte. |
-| `app/build.gradle.kts` | enthält keine wiederholte Konfiguration mehr. |
-| `Shared/build.gradle.kts` | enthält keine wiederholte Konfiguration mehr. |
-| `settings.gradle.kts` | bleibt unverändert; registriert weiterhin `app` und `Shared`. |
-| `libs.versions.toml` | bleibt die zentrale Quelle für Versionen und Koordinaten. |
+| Root `build.gradle.kts` | applies plugins and configures Android and dependencies for all subprojects. |
+| `app/build.gradle.kts` | no longer contains repeated configuration. |
+| `Shared/build.gradle.kts` | no longer contains repeated configuration. |
+| `settings.gradle.kts` | remains unchanged and still registers `app` and `Shared`. |
+| `libs.versions.toml` | remains the central source for versions and coordinates. |
 
-## Bewertung des Ansatzes
+## Assessment of the approach
 
-Für das Lehrbeispiel zeigt `subprojects` sehr direkt, dass Gradle Module programmatisch konfigurieren kann. Neue gleichartige Module können dadurch mit wenig eigener Buildkonfiguration auskommen.
+For this teaching example, `subprojects` demonstrates very directly that Gradle can configure modules programmatically. New modules of the same type can therefore require very little configuration in their own build files.
 
-Die Zentralisierung hat aber auch einen Preis: Beim Öffnen einer Modul-Builddatei ist nicht mehr unmittelbar sichtbar, welche Plugins und Bibliotheken das Modul erhält. Außerdem bekommen derzeit alle Subprojekte nahezu den vollständigen Kurs-Stack, auch wenn ein einzelnes Modul nur einen Teil davon benötigt. Für ein großes Produktivprojekt wären typisierte Convention Plugins in einem separaten Build häufig die besser skalierende Lösung. Für die Vorlesung ist der gezeigte Zwischenschritt jedoch kompakt und macht das Grundprinzip ohne zusätzliche Plugin-Infrastruktur sichtbar.
+Centralization also has a cost: when opening a module build file, it is no longer immediately apparent which plugins and libraries the module receives. In addition, all subprojects currently receive nearly the complete course stack, even if an individual module only needs part of it. For a large production project, typed convention plugins in a separate build are often the more scalable solution. For the course, however, this intermediate stage is compact and demonstrates the basic principle without additional plugin infrastructure.
 
-## Vergleich der drei Stufen
+## Comparison of the three stages
 
-| Stufe | Module | Ort der Hauptkonfiguration |
+| Stage | Modules | Location of the main configuration |
 |---|---|---|
 | `gradle_01_wizard` | `app` | `app/build.gradle.kts` |
-| `gradle_02_shared` | `app`, `Shared` | jeweils eigene Modul-Builddatei |
-| `gradle_03_modules` | `app`, `Shared` | gemeinsames Root-`build.gradle.kts` |
+| `gradle_02_shared` | `app`, `Shared` | separate build file for each module |
+| `gradle_03_modules` | `app`, `Shared` | shared root `build.gradle.kts` |
 
-Zum Prüfen des Builds eignen sich:
+Useful commands for checking the build are:
 
 ```bash
 ./gradlew projects
@@ -176,4 +178,4 @@ Zum Prüfen des Builds eignen sich:
 ./gradlew :app:assembleDebug
 ```
 
-Die drei Projekte dokumentieren damit nicht drei unabhängige Projekte, sondern drei nachvollziehbare Entwicklungsstände desselben Projekts.
+The three projects therefore document three traceable development stages of the same project, not three unrelated projects.
