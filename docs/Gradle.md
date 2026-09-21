@@ -6,8 +6,8 @@ Das Projekt `gradle_02_shared` zeigt zunächst bewusst zwei weitgehend vollstän
 
 Die vorherigen Stufen bleiben separat lesbar:
 
-- [`master`: Gradle-Basisprojekt](https://github.com/berndRog/gradle_03_modules/blob/master/docs/Gradle.md)
-- [`shared`: Android Library ergänzen](https://github.com/berndRog/gradle_03_modules/blob/shared/docs/Gradle.md)
+- [`gradle_01_wizard`: Gradle-Basisprojekt](https://github.com/berndRog/gradle_01_wizard/blob/master/docs/Gradle.md)
+- [`gradle_02_shared`: Android Library ergänzen](https://github.com/berndRog/gradle_02_shared/blob/master/docs/Gradle.md)
 
 Das Projekt enthält weiterhin genau zwei Module:
 
