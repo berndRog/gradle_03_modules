@@ -4,7 +4,7 @@
 
 This repository is the third Gradle stage. It still contains the modules `app` and `Shared`, but moves their common plugins, Android settings, and dependencies into the root `build.gradle.kts`. The two module build files therefore remain minimal.
 
-The changes are explained in German in [docs/Gradle.md](docs/Gradle.md).
+The changes are explained in [docs/Gradle.md](docs/Gradle.md). A [German version](docs/Gradle_ger.md) is also available.
 
 ## The three stages
 
