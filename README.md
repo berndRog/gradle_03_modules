@@ -8,9 +8,9 @@ Die Änderungen werden in [docs/Gradle.md](docs/Gradle.md) beschrieben.
 
 | Projekt | Inhalt | Schwerpunkt |
 |---|---|---|
-| [`gradle_01_wizard`](https://github.com/berndRog/gradle_03_modules/tree/master) | ein `app`-Modul | Gradle-Dateien eines Wizard-Projekts |
-| [`gradle_02_shared`](https://github.com/berndRog/gradle_03_modules/tree/shared) | `app` und `Shared` | Application- und Library-Modul |
-| [`gradle_03_modules`](https://github.com/berndRog/gradle_03_modules/tree/modules) | zentrale Konfiguration für `app` und `Shared` | gemeinsame Einstellungen aus Moduldateien herausziehen |
+| [`gradle_01_wizard`](https://github.com/berndRog/gradle_01_wizard) | ein `app`-Modul | Gradle-Dateien eines Wizard-Projekts |
+| [`gradle_02_shared`](https://github.com/berndRog/gradle_02_shared) | `app` und `Shared` | Application- und Library-Modul |
+| [`gradle_03_modules`](https://github.com/berndRog/gradle_03_modules) | zentrale Konfiguration für `app` und `Shared` | gemeinsame Einstellungen aus Moduldateien herausziehen |
 
 Der Projektname `gradle_03_modules` bedeutet hier **Konfiguration der Module**. Dieser Stand fügt keine weiteren A-Module hinzu.
 
