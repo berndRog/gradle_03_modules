@@ -4,7 +4,7 @@
 
 Dieses Repository ist die dritte Gradle-Stufe. Es besitzt weiterhin die Module `app` und `Shared`, zieht deren gemeinsame Plugins, Android-Einstellungen und Abhängigkeiten aber in das Root-`build.gradle.kts`. Die beiden Modul-Builddateien bleiben dadurch minimal.
 
-Die Änderungen werden in [docs/Gradle.md](docs/Gradle.md) beschrieben.
+Die Änderungen werden in [docs/Gradle_ger.md](docs/Gradle_ger.md) beschrieben. Zusätzlich gibt es eine [englische Version](docs/Gradle.md).
 
 ## Die drei Stufen
 
