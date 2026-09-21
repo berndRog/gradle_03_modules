@@ -1,17 +1,19 @@
-# Gradle-Beispiel: zentrale Modulkonfiguration
+# Gradle Example: Centralized Module Configuration
 
-Dieses Repository ist die dritte Gradle-Stufe. Er besitzt weiterhin die Module `app` und `Shared`, zieht deren gemeinsame Plugins, Android-Einstellungen und Abhängigkeiten aber in das Root-`build.gradle.kts`. Die beiden Modul-Builddateien bleiben dadurch minimal.
+[Deutsche Version](README_ger.md)
 
-Die Änderungen werden in [docs/Gradle.md](docs/Gradle.md) beschrieben.
+This repository is the third Gradle stage. It still contains the modules `app` and `Shared`, but moves their common plugins, Android settings, and dependencies into the root `build.gradle.kts`. The two module build files therefore remain minimal.
 
-## Die drei Stufen
+The changes are explained in German in [docs/Gradle.md](docs/Gradle.md).
 
-| Projekt | Inhalt | Schwerpunkt |
+## The three stages
+
+| Project | Contents | Focus |
 |---|---|---|
-| [`gradle_01_wizard`](https://github.com/berndRog/gradle_01_wizard) | ein `app`-Modul | Gradle-Dateien eines Wizard-Projekts |
-| [`gradle_02_shared`](https://github.com/berndRog/gradle_02_shared) | `app` und `Shared` | Application- und Library-Modul |
-| [`gradle_03_modules`](https://github.com/berndRog/gradle_03_modules) | zentrale Konfiguration für `app` und `Shared` | gemeinsame Einstellungen aus Moduldateien herausziehen |
+| [`gradle_01_wizard`](https://github.com/berndRog/gradle_01_wizard) | one `app` module | Gradle files of a wizard project |
+| [`gradle_02_shared`](https://github.com/berndRog/gradle_02_shared) | `app` and `Shared` | application and library modules |
+| [`gradle_03_modules`](https://github.com/berndRog/gradle_03_modules) | centralized configuration for `app` and `Shared` | extracting common settings from module build files |
 
-Der Projektname `gradle_03_modules` bedeutet hier **Konfiguration der Module**. Dieser Stand fügt keine weiteren A-Module hinzu.
+The name `gradle_03_modules` refers to the **configuration of the modules**. This stage does not add any further course modules.
 
-Die Änderungen gegenüber `gradle_02_shared` werden in der Gradle-Beschreibung dateibezogen gegenübergestellt.
+The Gradle guide compares the changes with `gradle_02_shared` file by file.
