@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Shared is an Android Library. Its manifest is merged into the manifest of
+  every application module that depends on it.
+-->
+<manifest />
