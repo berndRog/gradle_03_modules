@@ -54,7 +54,10 @@ subprojects {
             )
 
          namespace = "de.rogallab.mobile.$cleanLibraryName"
-         compileSdk = 37
+
+         compileSdk {
+            version = release(37) { minorApiLevel = 1 }
+         }
 
          defaultConfig {
             minSdk = 26
@@ -87,7 +90,10 @@ subprojects {
       extensions.configure<ApplicationExtension> {
          // Preserve the package and application ID of the wizard project.
          namespace = "de.rogallab.mobile"
-         compileSdk = 37
+
+         compileSdk {
+            version = release(37) { minorApiLevel = 1 }
+         }
 
          defaultConfig {
             applicationId = "de.rogallab.mobile"
